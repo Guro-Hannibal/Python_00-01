@@ -1,6 +1,6 @@
 import sys
 
-bablo, a, b, c = sys.argv
+money, a, b, c = sys.argv
 
 def babosu(a, b, c):
     return a * b + c
