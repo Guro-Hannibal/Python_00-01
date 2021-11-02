@@ -1,4 +1,4 @@
-import os
+# import os
 
 dict_demo = {'Zero': 'Ноль', 'One': 'Один', 'Two': 'Два', 'Three': 'Три', 'Four': 'Четыре', 'Five': 'Пять',
              'Six': 'Шесть', 'Seven': 'Семь', 'Eight': 'Восемь', 'Nine': 'Девять'}
@@ -6,7 +6,7 @@ dict_demo = {'Zero': 'Ноль', 'One': 'Один', 'Two': 'Два', 'Three': '�
 with open('ex_4.txt', 'r') as f:
     data = f.readlines()
 
-os.remove('ex_4_new.txt')
+# os.remove('ex_4_new.txt')
 
 with open('ex_4_new.txt', 'x') as f:
     i = 0
