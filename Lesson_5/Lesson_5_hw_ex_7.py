@@ -1,8 +1,8 @@
 import json
 
-from os import remove
-
-remove('ex_7_json.json')
+# from os import remove
+#
+# remove('ex_7_json.json')
 
 with open('ex_7.txt', 'r') as f:
     list_demo = f.readlines()
