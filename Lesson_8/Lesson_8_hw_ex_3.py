@@ -1,5 +1,5 @@
 demo_true = [12.69, '23', '43.420', 12, 65]
-demo_false = [True, 14, 54, '15', 'abc', 432, 43,]
+demo_false = [True, 14, 54, '15', 'abc', 432, 43]
 
 
 class CheckList:
