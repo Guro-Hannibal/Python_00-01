@@ -1,21 +1,42 @@
-from abc import abstractmethod, ABC
-
-
 class Master:
     storages = {}
 
     @staticmethod
     def start_execution():
-        department = input('Введите название подразделения : ')
-        choose = input('Введите: \n P для добавления принтера \n S для добавления сканнера \n '
-                       'X для добавления ксерокса\n')
-        list_data = input('Введите через пробел название компании производителя, '
-                          'модель, цвет и количество: ').split()
+        department = Master.enter_department()
+        if not Master.check('department', department):
+            print('%' * 35 + '  !!!  PROGRAM ABORTED  !!!  ' + '%' * 35)
+            return False
+        choose = Master.enter_choose()
+        if not Master.check('choose', choose):
+            print('%' * 35 + '  !!!  PROGRAM ABORTED  !!!  ' + '%' * 35)
+            return False
+        list_data = Master.enter_list_data()
+        if not Master.check('list_data', list_data):
+            print('%' * 35 + '  !!!  PROGRAM ABORTED !!!  ' + '%' * 35)
+            return False
         if department in Master.storages.keys():
             Master.__execution_part_2(department, choose, list_data)
         else:
             Master.storages[department] = Storage(department)
             Master.__execution_part_2(department, choose, list_data)
+
+    @staticmethod
+    def enter_department():
+        department = input('Введите название подразделения : ')
+        return department
+
+    @staticmethod
+    def enter_choose():
+        choose = input('Введите: \n P для добавления принтера \n S для добавления сканнера \n '
+                       'X для добавления ксерокса\n')
+        return choose
+
+    @staticmethod
+    def enter_list_data():
+        list_data = input('Введите через пробел название компании производителя, '
+                          'модель, цвет и количество: ').split()
+        return list_data
 
     @staticmethod
     def __execution_part_2(department, choose, list_data):
@@ -27,6 +48,27 @@ class Master:
             Master.storages[department].store_in(Xerox(list_data[0], list_data[1], list_data[2], list_data[3]))
         else:
             print('Facepalm')
+
+    @staticmethod
+    def check(what_to_check, check):
+        result = True
+        if what_to_check == 'department':
+            pass
+        #     здесь может быть проверка на существующие подразделения
+        elif what_to_check == 'choose':
+            if check != 'P' and check != 'S' and check != 'X':
+                print('Unknown parameter')
+                return False
+        elif what_to_check == 'list_data':
+            try:
+                int(check[3])
+            except ValueError:
+                print('Wrong amount')
+                result = False
+            if len(check) > 4:
+                print('There are extra parameters')
+                result = False
+        return result
 
 
 class Storage:
@@ -42,7 +84,7 @@ class Storage:
 
     def store_in(self, off_eq):
         if isinstance(off_eq, Printer):
-            self.storage_printers[off_eq.__str__()] = off_eq.__dict__
+            self.storage_printers[str(off_eq)] = off_eq.__dict__
         elif isinstance(off_eq, Scanner):
             self.storage_scanners[off_eq.__str__()] = off_eq.__dict__
         elif isinstance(off_eq, Xerox):
@@ -51,12 +93,12 @@ class Storage:
             print('Unknown object')
 
 
-class OfficeEquipment(ABC):
+class OfficeEquipment:
 
-    def __init__(self, company, model, speed, count):
+    def __init__(self, company, model, colour, count):
         self.company = company
         self.model = model
-        self.speed = speed
+        self.colour = colour
         self.count = count
 
     def __str__(self):
@@ -65,20 +107,20 @@ class OfficeEquipment(ABC):
 
 class Printer(OfficeEquipment):
     # просто так
-    def __init__(self, company, model, speed, count):
-        super().__init__(company, model, speed, count)
+    def __init__(self, company, model, colour, count):
+        super().__init__(company, model, colour, count)
 
 
 class Scanner(OfficeEquipment):
     # просто так
-    def __init__(self, company, model, speed, count):
-        super().__init__(company, model, speed, count)
+    def __init__(self, company, model, colour, count):
+        super().__init__(company, model, colour, count)
 
 
 class Xerox(OfficeEquipment):
     # просто так
-    def __init__(self, company, model, speed, count):
-        super().__init__(company, model, speed, count)
+    def __init__(self, company, model, colour, count):
+        super().__init__(company, model, colour, count)
 
 
 xerox = Xerox('Samsung', 'HHJ101', 1, 1)
@@ -103,9 +145,10 @@ storage = Storage('Moscow Dep')
 # print(Master.storages['Wololo'] in Master.storages)
 # if 'Wololo' in Master.storages.keys():
 #     print('wololo')
-# Master.start_execution()
+Master.start_execution()
 # print(Master.storages['Muhaha'].storage_printers)
 # print(Master.storages['Wololo'].storage_printers)
-storage.store_in(xerox)
-print(str(xerox))
-print(xerox.__str__())
+print('%' * 100)
+# storage.store_in(xerox)
+# print(str(xerox))
+# print(xerox.__str__())
