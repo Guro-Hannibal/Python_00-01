@@ -24,7 +24,14 @@ class ComplexNumbers:
         return ComplexNumbers(a, b)
 
     def __truediv__(self, other):
-        pass
+        if other.b < 0:
+            a1 = self.a * other.a + self.b * -other.b * -1
+            a2 = self.b * other.a + self.a * -other.b
+        else:
+            a1 = self.a * other.a + self.b * other.b * -1
+            a2 = self.b * other.a + self.a * other.b
+        b = pow(other.a, 2) - pow(other.b, 2) * -1
+        return ComplexNumbers(a1 / b, a2 / b)
 
 
 c_num = ComplexNumbers(5, -24)
@@ -39,3 +46,10 @@ print(math.sqrt(85))
 print(3--2)
 print(c_num - c_num_2)
 print(c_num * c_num_2)
+num = -5
+c_num = ComplexNumbers(7, -6)
+c_num_2 = ComplexNumbers(16, -8)
+print(-num)
+print(c_num / c_num_2)
+print(-6 ** 2)
+print(pow(-6, 2))
